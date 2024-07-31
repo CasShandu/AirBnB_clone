@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 from datetime import datetime
 import uuid
 import models
@@ -29,10 +28,7 @@ class BaseModel:
         Raises:
             TypeError: If kwargs contain unexpected or invalid keys.
         """
-
-class BaseModel:
-    def __init__(self, *args, **kwargs):
-        time_format = "%Y-%m-%dT%H:%S.%f"
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
@@ -42,20 +38,17 @@ class BaseModel:
                 else:
                     setattr(self, key, value)
         else:
-
             self.id = str(uuid.uuid4())
-
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
         
         models.storage.new(self)
 
-
     def save(self):
         """
         Updates updated_at attribute with current datetime and simulates saving object state.
         """
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
         models.storage.save()
 
     def to_dict(self):
@@ -81,7 +74,7 @@ class BaseModel:
         class_name = self.__class__.__name__
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
-if __name__ =="__main__":
+if __name__ == "__main__":
     my_model = BaseModel()
     my_model.name = "My First Model"
     my_model.my_number = 89
@@ -93,3 +86,4 @@ if __name__ =="__main__":
     print("JSON of my_model:")
     for key in my_model_json.keys():
         print("\t{}: ({}) - {}".format(key, type(my_model_json[key]), my_model_json[key]))
+

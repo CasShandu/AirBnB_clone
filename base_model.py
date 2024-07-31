@@ -32,7 +32,7 @@ class BaseModel:
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
-        time_format = "%Y-%m-%dT%H:%S.%f"
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
