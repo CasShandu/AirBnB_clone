@@ -2,6 +2,7 @@
 
 from datetime import datetime
 import uuid
+import models
 
 class BaseModel:
     """
@@ -46,6 +47,8 @@ class BaseModel:
 
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
+        
+        models.storage.new(self)
 
 
     def save(self):
@@ -53,7 +56,7 @@ class BaseModel:
         Updates updated_at attribute with current datetime and simulates saving object state.
         """
         self.updated_at = datetime.now()
-        
+        models.storage.save()
     def to_dict(self):
         """
         Returns a dictionary representation of the BaseModel instance.
